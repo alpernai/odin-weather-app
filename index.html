@@ -4,16 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odin Weather App - by alpernai</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/8145d305bd.js" crossorigin="anonymous"></script>
     <script src="main.js" defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Weather App</h1>
-    <h2></h2>
-    <input type="text" id="search-location">
-    <button id="search-button">
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
+    <header>
+        <h1>WTF: Weather Today & Forecast</h1>
+        <input id="search-input" type="text" placeholder="Search">
+    </header>
+
+    <main>
+        <div id="location-header">
+            <h2 id="location-name">Location Name</h2>
+        </div>
+
+        <div id="main-container">
+
+            <div id="forecast-wrapper">
+                <div id="current-forecast-container">
+                    <h3>Current</h3>
+                    <div class="current-forecast-grid">
+                        <div class="current-forecast-item">Condition</div>
+                        <div class="current-forecast-item"><img src="https://via.placeholder.com/50" alt="Weather Icon"></div>
+                        <div class="current-forecast-item">Temperature</div>
+                        <div class="current-forecast-item">22°C</div>
+                        <div class="current-forecast-item">Humidity</div>
+                        <div class="current-forecast-item">65%</div>
+                        <div class="current-forecast-item">Precipitation</div>
+                        <div class="current-forecast-item">10%</div>
+                    </div>
+                </div>
+    
+                <div id="weekly-forecast-container">
+                    <h3>Week</h3>
+                    <div class="forecast-header">
+                        <div class="forecast-header-item">Day</div>
+                        <div class="forecast-header-item">Min</div>
+                        <div class="forecast-header-item">Max</div>
+                    </div>
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+                    <!-- Additional rows will be added dynamically with JS -->
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+                    <div class="forecast-row">
+                        <div class="forecast-item" id="date0">March 14</div>
+                        <div class="forecast-item" id="minTemp0">15°C</div>
+                        <div class="forecast-item" id="maxTemp0">25°C</div>
+                    </div>
+
+            </div>
+           
+            </div>
+        </div>
+    </main>
+
 </body>
 </html>

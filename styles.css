@@ -1,9 +1,109 @@
 * {
     box-sizing: border-box;
     margin: 0;
-    padding: 0;  
+    padding: 0;
+    font-family: "Libre Baskerville", serif;
+    font-weight: bolder;
+    color: black;
 }
 
 body {
-    background-color: aqua;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("https://images.pexels.com/photos/209831/pexels-photo-209831.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(0.1em);
+}
+
+#search-input {
+    width: 25vw;
+    padding: 0.5em;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 1em;
+}
+
+input:focus {
+    background-color: rgba(255, 255, 255, 0.90);
+    outline: 0.1em solid rgba(255, 255, 255, 0.5);
+}
+
+#location-header {
+    width: calc(100%);
+    text-align: center;
+    padding: 0.25em;
+    margin-top: 1em;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(0.05em);
+    border-radius: 1em;
+    margin-bottom: 1em;
+}
+
+#forecast-wrapper {
+    display: flex;
+    gap: 1em;
+    margin: 0;
+    align-items: flex-start; /* Align containers to the top */
+}
+
+#current-forecast-container,
+#weekly-forecast-container {
+    flex: 1;
+    padding: 1em;
+    width: 45vw;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(0.05em);
+    border-radius: 1em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.current-forecast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2em; /* Reduced gap */
+}
+
+.current-forecast-item {
+    text-align: center;
+    padding: 1em; /* Reduced padding */
+}
+
+.forecast-header {
+    display: grid;  
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em; /* Reduced gap */
+    font-weight: bold;
+    padding: 0.5em; /* Reduced padding */
+    border-bottom: 1px solid #ccc;
+
+}
+
+.forecast-row {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1em; /* Reduced gap */
+    padding: 0.25em; /* Reduced padding */
+}
+
+.forecast-item {
+    text-align: center;
+    padding: 0.30em; /* Reduced padding */
 }

@@ -14,36 +14,38 @@ async function fetchWeatherData(location) {
     }
 };
 
-const getCurrentWeather = (data) => {
-    const date = data.forecast.forecastday[0].date;
+const getCurrentWeather = (data) => {    
     const location = data.location.name;
     const region = data.location.region;
-    const conditionIcon = data.current.condition.icon;
-    const conditionText = data.current.condition.text; 
-    const tempC = data.current.temp_c;
-    const tempF = data.current.temp_f;
-    const humidity = data.current.humidity;
 
-    const rain = data.forecast.forecastday[0].day.daily_chance_of_rain;
+    const date = data.forecast.forecastday[0].date;
+
     const minTempC = data.forecast.forecastday[0].day.mintemp_c;
     const minTempF = data.forecast.forecastday[0].day.mintemp_f;
     const maxTempC = data.forecast.forecastday[0].day.maxtemp_c;
     const maxTempF = data.forecast.forecastday[0].day.maxtemp_f;
+    const conditionIcon = data.current.condition.icon;
+    const conditionText = data.current.condition.text; 
+    
+    const currentTempC = data.current.temp_c;
+    const currentTempF = data.current.temp_f;
+    const humidity = data.current.humidity;
+    const rain = data.forecast.forecastday[0].day.daily_chance_of_rain;
 
     return {
-        date,
         location,
         region,
-        conditionIcon,
-        conditionText,
-        tempC,
-        tempF,
-        humidity,
-        rain,
+        date,
         minTempC,
         minTempF,
         maxTempC,
-        maxTempF
+        maxTempF,
+        conditionIcon,
+        conditionText,
+        currentTempC,
+        currentTempF,
+        humidity,
+        rain    
     };
 };
 
@@ -52,5 +54,6 @@ const showWeather = async () => {
     const currentWeather = getCurrentWeather(data);    
     console.log(currentWeather); 
 };
+
 
 showWeather();
