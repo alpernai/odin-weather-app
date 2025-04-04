@@ -88,9 +88,8 @@ input:focus {
     display: grid;  
     align-items: center;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.5em; 
     font-weight: bold;
-    padding: 0.20em; 
+    padding-bottom: 2.5em; 
 
 }
 
