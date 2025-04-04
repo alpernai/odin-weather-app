@@ -1,59 +1,107 @@
-async function fetchWeatherData(location) {
+// ---------------------------------------------------------------------------------------
+// ------------------------------ Functionality ------------------------------------------
+// ---------------------------------------------------------------------------------------
+const MY_KEY = "W4BMR9F6HRM5N3D7Q888MMFAX";
+const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
+let searchLocation = "Guadalajara";
+
+async function fetchWeatherData(location, key) {
     try {
-        const request = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=231c803a1653407baf8161732251403&q=${location}&days=7&aqi=no`);
-        
-        if (request.status === 200) {
-            const response = await request.json();
-            console.log(response);  
-            return response; 
-        } else {
-            throw new Error(`Error: ${request.status} - Unable to fetch weather data`);
+        const response = await fetch(`${BASE_URL}/${searchLocation}?key=${MY_KEY}&include=days,current`);
+
+        if (!response.ok) {
+            throw new Error (`HTTP Error. Status: ${response.status}`)
         }
-    } catch (error) {
-        console.error("Failed to fetch weather data:", error);
+    
+        const weatherData = await response.json();
+        console.log(weatherData);
+        return weatherData;
+
+    } catch {
+        console.error("Fetch error: ", error);
+        return null;
     }
 };
 
-const getCurrentWeather = (data) => {    
-    const location = data.location.name;
-    const region = data.location.region;
+const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 
-    const date = data.forecast.forecastday[0].date;
+// const filterCurrentWeatherData = (data) => {
+//     const unfilteredData = data;
+//     const location = unfilteredData.address;
+//     const date = unfilteredData.days[0].datetime;
+//     const condition = unfilteredData.conditions;
+//     const temperature = unfilteredData.days[0].temp;
+//     const min = unfilteredData.days[0].tempmin;
+//     const max = unfilteredData.days[0].tempmax;
+//     const humidity = unfilteredData.days[0].humidity;
+//     const precipitation = unfilteredData.precipprob;
 
-    const minTempC = data.forecast.forecastday[0].day.mintemp_c;
-    const minTempF = data.forecast.forecastday[0].day.mintemp_f;
-    const maxTempC = data.forecast.forecastday[0].day.maxtemp_c;
-    const maxTempF = data.forecast.forecastday[0].day.maxtemp_f;
-    const conditionIcon = data.current.condition.icon;
-    const conditionText = data.current.condition.text; 
-    
-    const currentTempC = data.current.temp_c;
-    const currentTempF = data.current.temp_f;
-    const humidity = data.current.humidity;
-    const rain = data.forecast.forecastday[0].day.daily_chance_of_rain;
+//     return {
+//         location,
+//         date,
+//         condition,
+//         temperature,
+//         min,
+//         max,
+//         humidity,
+//         precipitation
+//     }
+// };
 
-    return {
-        location,
-        region,
-        date,
-        minTempC,
-        minTempF,
-        maxTempC,
-        maxTempF,
-        conditionIcon,
-        conditionText,
-        currentTempC,
-        currentTempF,
-        humidity,
-        rain    
-    };
-};
+// const filterWeeklyWeatherData = (day) => {
+//     const date = unfilteredData.days[0].datetime;
+//     const min = unfilteredData.days[i].tempmin;
+//     const max = unfilteredData.days[i].tempmax;
 
-const showWeather = async () => {
-    const data = await fetchWeatherData("Guadalajara"); 
-    const currentWeather = getCurrentWeather(data);    
-    console.log(currentWeather); 
-};
+//     return {
+//         date,
+//         min,
+//         max
+//     }
+// };
 
 
-showWeather();
+
+
+// ---------------------------------------------------------------------------------------
+// ----------------------------------- Display -------------------------------------------
+// ---------------------------------------------------------------------------------------
+
+// const displayCurrentData = () => {
+//     const currentData = filterWeatherData();
+//     document.querySelector(".current-date").textContent=`${currentData.date}`;
+//     document.querySelector(".current-condition").textContent=`${currentData.condition}`;
+//     document.getElementById("current-temperature").textContent=`${currentData.temperature}`;
+//     document.querySelector(".current-min").textContent=`${currentData.min}`;
+//     document.querySelector(".current-max").textContent=`${currentData.max}`
+//     document.getElementById("humidity-percentage").textContent=`${currentData.humidity}`;
+//     document.querySelector(".current-precipitation").textContent=`${currentData.precipitation}`;
+
+// };
+
+
+// const displayWeeklyData = (data) => {
+//     const unfilteredData = data;
+//     const weeklyForecastContainer = document.getElementById("weekly-forecast-container");
+//     for (i = 1; i < 7; i++) {
+//         const newForecastCard = createForecastRowHTML();
+//         const filteredDateData = filterWeeklyData(i);
+//         forecastDate.textValue = filteredDateData.date; 
+//         forecastMin.textValue = filteredDateData.min;
+//         forecastMax.textValue = filteredDateData.max;
+//         weeklyForecastContainer.append(newForecastCard);
+//     }
+// };
+
+// const createForecastRowHTML = () => {
+//     create forecastRow div and add to it the class forecast-row.
+//     create forecastDate div and to it the classes forecast-item and date
+//     create forecastMin div and to it the classes forecast-item and min-temp
+//     create forecastMax div and to it the classes forecast-item and min-temp
+//     append forecastDate, forecastMin and forecastMax into forecastRow
+//     return forecastRow
+// };
+
+
+
+

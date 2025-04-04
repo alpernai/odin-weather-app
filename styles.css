@@ -56,9 +56,9 @@ input:focus {
 
 #forecast-wrapper {
     display: flex;
-    gap: 1em;
+    gap: 2em;
     margin: 0;
-    align-items: flex-start; /* Align containers to the top */
+    align-items: flex-start; 
 }
 
 #current-forecast-container,
@@ -76,22 +76,21 @@ input:focus {
 .current-forecast-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2em; /* Reduced gap */
+    gap: 2em; 
 }
 
 .current-forecast-item {
-    text-align: center;
-    padding: 1em; /* Reduced padding */
+    text-align: start;
+    padding: 0.20em; 
 }
 
 .forecast-header {
     display: grid;  
     align-items: center;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.5em; /* Reduced gap */
+    gap: 0.5em; 
     font-weight: bold;
-    padding: 0.5em; /* Reduced padding */
-    border-bottom: 1px solid #ccc;
+    padding: 0.20em; 
 
 }
 
@@ -99,11 +98,11 @@ input:focus {
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1em; /* Reduced gap */
-    padding: 0.25em; /* Reduced padding */
+    gap: 1em; 
+    padding: .75em; 
 }
 
 .forecast-item {
     text-align: center;
-    padding: 0.30em; /* Reduced padding */
+    padding: 0.30em; 
 }
