@@ -1,6 +1,7 @@
 const MY_KEY = "W4BMR9F6HRM5N3D7Q888MMFAX";
 const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
-let isFarenheit = true; 
+const unitToggleBtn = document.getElementById('unit-toggle');
+let isFarenheit = false; 
 
 async function fetchWeatherData(location) { 
     try {
@@ -22,7 +23,8 @@ async function fetchWeatherData(location) {
 };
 
 const toggleUnits = () => {
-    isFarenheit ? false : true;
+    isFarenheit = !isFarenheit;
+    updateUnitDisplay();
 };
 
 const changeToCelcius = (fahrenheit) => {
@@ -186,9 +188,15 @@ function createForecastRowHTML(dayData) {
     return forecastRow;
 }
 
+function updateUnitDisplay() {
+    unitToggleBtn.textContent = `°${isFarenheit ? 'F' : 'C'}`;
+}
+
 // --------------------------------------------------------------------
 
 processWeather("New York");
+unitToggleBtn.addEventListener('click', toggleUnits);
 const searchInput = document.getElementById('search-input');
 searchInput.addEventListener('keypress', handleSearch);
+updateUnitDisplay();
 

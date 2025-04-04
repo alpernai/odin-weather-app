@@ -14,8 +14,10 @@
 <body>
     <header>
         <h1>WTF: Weather Today & Forecast</h1>
-        <input id="search-input" type="text" placeholder="Search">
-        <button id="toggle-units">F</button>
+        <div class="search-container">
+            <input id="search-input" type="text" placeholder="Search">
+            <button id="unit-toggle">°F</button>
+        </div>
     </header>
 
     <main>
@@ -34,9 +36,9 @@
                         <div class="current-forecast-item current-condition"></div>
                         <div class="current-forecast-item current-temperature-label">Temperature</div>
                         <div class="current-forecast-item current-temperature" id="current-temperature"></div>
-                        <div class="current-forecast-item current-min-label">Max</div>
+                        <div class="current-forecast-item current-min-label">Min</div>
                         <div class="current-forecast-item current-min" id="current-temperature"></div>
-                        <div class="current-forecast-item current-max-label">Min</div>
+                        <div class="current-forecast-item current-max-label">Max</div>
                         <div class="current-forecast-item current-max" id="current-temperature"></div>
                         <div class="current-forecast-item current-humidity-label">Humidity</div>
                         <div class="current-forecast-item current-humidity" id="humidity-percentage"></div>
