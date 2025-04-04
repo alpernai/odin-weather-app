@@ -4,6 +4,7 @@
 const MY_KEY = "W4BMR9F6HRM5N3D7Q888MMFAX";
 const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
 let searchLocation = "Guadalajara";
+let isFarenheit = true; 
 
 async function fetchWeatherData(location, key) {
     try {
@@ -60,8 +61,13 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 //     }
 // };
 
+// const toggleUnits = () => {
+//     isFarenheit ? false : true;
+// };
 
-
+// const changeToCelcius = (temp) => {
+//     return (Number(temp) - 32) * (5/9); 
+// };
 
 // ---------------------------------------------------------------------------------------
 // ----------------------------------- Display -------------------------------------------
