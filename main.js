@@ -4,7 +4,7 @@ let isFarenheit = true;
 
 async function fetchWeatherData(location) { 
     try {
-        // Request
+        // Send request
         const response = await fetch(`${BASE_URL}/${location}?key=${MY_KEY}&include=days,current`);
 
         if (!response.ok) {
@@ -21,14 +21,24 @@ async function fetchWeatherData(location) {
     }
 };
 
+const toggleUnits = () => {
+    isFarenheit ? false : true;
+};
+
+const changeToCelcius = (fahrenheit) => {
+    return Math.round((fahrenheit - 32) * 5/9);
+}
+
 const filterCurrentWeatherData = (data) => {
     const current = data.currentConditions;
     const today = data.days[0]; 
 
+    // Get F
     let temperature = current?.temp || today.temp;
     let min = today.tempmin;
     let max = today.tempmax;
-
+    
+    // Conditionally change to C 
     if (!isFarenheit) { 
       temperature = changeToCelcius(temperature);
       min = changeToCelcius(min);
@@ -50,10 +60,12 @@ const filterCurrentWeatherData = (data) => {
 const filterWeeklyWeatherData = (data, day) => {
     const today = data.days[day]; 
 
+    // Get F
     let date = today.datetime;
     let min = today.tempmin;
     let max = today.tempmax;
 
+    // Conditionally change to C 
     if (!isFarenheit) { 
         min = changeToCelcius(min);
         max = changeToCelcius(max);
@@ -66,12 +78,37 @@ const filterWeeklyWeatherData = (data, day) => {
     }
 };
 
-// const toggleUnits = () => {
-//     isFarenheit ? false : true;
-// };
+async function processWeather(location) { 
+    try {
+        // Get data
+        const requestResponse = await fetchWeatherData(location);
 
-function changeToCelcius(fahrenheit) {
-    return Math.round((fahrenheit - 32) * 5/9);
+        // Filter and display
+        const currentData = filterCurrentWeatherData(requestResponse);
+        displayCurrentData(currentData);
+        displayWeeklyData(requestResponse);
+
+    } catch (error) {
+        console.log(error);
+    }
+
+};
+
+function handleSearch(event) {
+    if (event.key !== 'Enter') return;
+    
+    const input = event.target;
+    const location = input.value.trim();
+    if (!location) return;
+    
+    processWeather(location)
+        .then(success => {
+            if (success) input.value = '';
+        })
+        .finally(() => {
+            input.disabled = false;
+            input.placeholder = originalPlaceholder;
+        });
 }
 
 // -------------------------------------------------------------------
@@ -79,30 +116,39 @@ function changeToCelcius(fahrenheit) {
 function displayCurrentData(data) {
     if (!data) return;
     
+    // Location
     document.getElementById("location-name").textContent = data.location;
+    // Date
     document.querySelector(".current-date").textContent = new Date(data.date).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric'
     });
+    // Condition
     document.querySelector(".current-condition").textContent = data.condition;
+    // Current temp
     document.querySelector(".current-temperature").textContent = `${data.temperature}°${isFarenheit ? 'F' : 'C'}`;
+    // Min
     document.querySelector(".current-min").textContent = `${data.min}°`;
+    // Max
     document.querySelector(".current-max").textContent = `${data.max}°`;
+    // Humidity
     document.querySelector(".current-humidity").textContent = `${data.humidity}%`;
+    // Precipitation
     document.querySelector(".current-precipitation").textContent = `${data.precipitation}%`;
 }
 
 const displayWeeklyData = (data) => {
     if (!data?.days) return;
 
+    // Get container
     const container = document.getElementById("weekly-forecast-container");
     
-    // Clear without removing header
+    // Clear container without removing header
     while (container.children.length > 1) {
         container.removeChild(container.lastChild);
     }
 
-    // Create rows for the next 7 days
+    // Create and display rows for the next 7 days
     for (let day = 1; day <= 7; day++) {
         const dayData = filterWeeklyWeatherData(data, day);
         if (!dayData) continue; 
@@ -112,7 +158,7 @@ const displayWeeklyData = (data) => {
 };
 
 function createForecastRowHTML(dayData) {
-    // Container
+    // Row
     const forecastRow = document.createElement('div');
     forecastRow.className = 'forecast-row';
     
@@ -134,43 +180,15 @@ function createForecastRowHTML(dayData) {
     forecastMax.className = 'forecast-item max-temp';
     forecastMax.textContent = `${Math.round(dayData.max)}°`;
     
-    // Append all
+    // Append 
     forecastRow.append(forecastDate, forecastMin, forecastMax);
     
     return forecastRow;
 }
 
-// const handleSearch = (event) => {
-    // const searchInput = document.getElementById('search-input');
-    // IF search input is not empty && submit is true (or click enter? TBD)
-    // THEN, searchLocation = searchInput
-    // const weatherData = await fetchWeatherData(searchLocation, MY_KEY);
-    // IF (weatherData)
-    // THEN 
-    //  + displayCurrentData(weatherData)
-    //  + dispalyWeeklyData(weatherData)
-// };
-
-// const handleUnitsButton = (event) => {
-// toggleUnits();
-// };
-
 // --------------------------------------------------------------------
 
-async function processWeather(location) { 
-    try {
-        const requestResponse = await fetchWeatherData(location);
-        console.log(requestResponse);
-
-        const currentData = filterCurrentWeatherData(requestResponse);
-        console.log(currentData); 
-        displayCurrentData(currentData);
-        displayWeeklyData(requestResponse);
-
-    } catch (error) {
-        console.log(error);
-    }
-
-};
-
 processWeather("New York");
+const searchInput = document.getElementById('search-input');
+searchInput.addEventListener('keypress', handleSearch);
+
