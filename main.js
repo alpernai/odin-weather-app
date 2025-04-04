@@ -31,11 +31,17 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 //     const location = unfilteredData.address;
 //     const date = unfilteredData.days[0].datetime;
 //     const condition = unfilteredData.conditions;
-//     const temperature = unfilteredData.days[0].temp;
-//     const min = unfilteredData.days[0].tempmin;
-//     const max = unfilteredData.days[0].tempmax;
+//     let temperature = unfilteredData.days[0].temp;
+//     let min = unfilteredData.days[0].tempmin;
+//     let max = unfilteredData.days[0].tempmax;
 //     const humidity = unfilteredData.days[0].humidity;
 //     const precipitation = unfilteredData.precipprob;
+
+//     if isFarenheit = false { 
+//       temperature = changeToCelcius(temperature);
+//       min = changeToCelcius(min);
+//       max = changeToCelcius(max);
+//     }
 
 //     return {
 //         location,
@@ -53,6 +59,11 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 //     const date = unfilteredData.days[0].datetime;
 //     const min = unfilteredData.days[i].tempmin;
 //     const max = unfilteredData.days[i].tempmax;
+
+// if isFarenheit = false { 
+//     const min = changeToCelcius(min);
+//     const max = changeToCelcius(max);
+// }
 
 //     return {
 //         date,
@@ -82,7 +93,6 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 //     document.querySelector(".current-max").textContent=`${currentData.max}`
 //     document.getElementById("humidity-percentage").textContent=`${currentData.humidity}`;
 //     document.querySelector(".current-precipitation").textContent=`${currentData.precipitation}`;
-
 // };
 
 
@@ -108,6 +118,17 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 //     return forecastRow
 // };
 
+// const handleSearch = (event) => {
+    // const searchInput = document.getElementById('search-input');
+    // IF search input is not empty && submit is true (or click enter? TBD)
+    // THEN, searchLocation = searchInput
+    // const weatherData = await fetchWeatherData(searchLocation, MY_KEY);
+    // IF (weatherData)
+    // THEN 
+    //  + displayCurrentData(weatherData)
+    //  + dispalyWeeklyData(weatherData)
+// };
 
-
-
+// const handleUnitsButton = (event) => {
+// toggleUnits();
+// };
