@@ -1,59 +1,63 @@
-// ---------------------------------------------------------------------------------------
-// ------------------------------ Functionality ------------------------------------------
-// ---------------------------------------------------------------------------------------
 const MY_KEY = "W4BMR9F6HRM5N3D7Q888MMFAX";
 const BASE_URL = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
-let searchLocation = "Guadalajara";
 let isFarenheit = true; 
 
-async function fetchWeatherData(location, key) {
+async function fetchWeatherData(location) { // Removed unused key parameter
     try {
-        const response = await fetch(`${BASE_URL}/${searchLocation}?key=${MY_KEY}&include=days,current`);
+        const response = await fetch(`${BASE_URL}/${location}?key=${MY_KEY}&include=days,current`);
 
         if (!response.ok) {
-            throw new Error (`HTTP Error. Status: ${response.status}`)
+            throw new Error(`HTTP Error. Status: ${response.status}`);
         }
     
         const weatherData = await response.json();
-        console.log(weatherData);
+        console.log("API Response:", weatherData); 
         return weatherData;
 
-    } catch {
-        console.error("Fetch error: ", error);
+    } catch (error) { 
+        console.error("Fetch error:", error);
         return null;
     }
 };
 
-const weatherData = fetchWeatherData(searchLocation, MY_KEY);
+const weatherData = fetchWeatherData("New York");
 
-// const filterCurrentWeatherData = (data) => {
-//     const unfilteredData = data;
-//     const location = unfilteredData.address;
-//     const date = unfilteredData.days[0].datetime;
-//     const condition = unfilteredData.conditions;
-//     let temperature = unfilteredData.days[0].temp;
-//     let min = unfilteredData.days[0].tempmin;
-//     let max = unfilteredData.days[0].tempmax;
-//     const humidity = unfilteredData.days[0].humidity;
-//     const precipitation = unfilteredData.precipprob;
+const filterCurrentWeatherData = (data) => {
+    const current = data.currentConditions;
+    const today = data.days[0]; 
 
-//     if isFarenheit = false { 
-//       temperature = changeToCelcius(temperature);
-//       min = changeToCelcius(min);
-//       max = changeToCelcius(max);
-//     }
+    let temperature = current?.temp || today.temp;
+    let min = today.tempmin;
+    let max = today.tempmax;
 
-//     return {
-//         location,
-//         date,
-//         condition,
-//         temperature,
-//         min,
-//         max,
-//         humidity,
-//         precipitation
-//     }
-// };
+    // if isFarenheit = false { 
+    //   temperature = changeToCelcius(temperature);
+    //   min = changeToCelcius(min);
+    //   max = changeToCelcius(max);
+    // }
+
+    return {
+        location: data.resolvedAddress || data.address,
+        date: current?.datetime || today.datetime,
+        condition: current?.conditions || today.conditions,
+        temperature,
+        min, 
+        max,
+        humidity: current?.humidity || today.humidity,
+        precipitation: current?.precipprob || today.precipprob,
+    };
+};
+
+// 1. First get the weather data (using your existing fetch function)
+fetchWeatherData("New York")
+  .then(apiData => {
+    // 2. Now process it
+    const currentWeather = filterCurrentWeatherData(apiData);
+    console.log("Processed current weather:", currentWeather);
+  })
+  .catch(error => {
+    console.error("Error:", error);
+  });
 
 // const filterWeeklyWeatherData = (day) => {
 //     const date = unfilteredData.days[0].datetime;
@@ -132,3 +136,5 @@ const weatherData = fetchWeatherData(searchLocation, MY_KEY);
 // const handleUnitsButton = (event) => {
 // toggleUnits();
 // };
+
+
